@@ -408,63 +408,61 @@ export function DeptHeadEvents({ currentUser }: DeptHeadEventsProps) {
                         );
                     })
                 ) : (
-                ): (
-                        <Card className = "border-0 shadow-sm">
-                        <CardContent className = "flex items-center justify-center p-12">
-                            <div className = "text-center space-y-2">
-                                <Calendar className = "h-12 w-12 mx-auto text-muted-foreground" />
-                <p className="text-muted-foreground font-medium">No events found</p>
-                <p className="text-sm text-muted-foreground">
-                    Team leaders will create events with tasks here
-                </p>
-            </div>
-        </CardContent>
-                    </Card >
-                )
-}
+                    <Card className="border-0 shadow-sm">
+                        <CardContent className="flex items-center justify-center p-12">
+                            <div className="text-center space-y-2">
+                                <Calendar className="h-12 w-12 mx-auto text-muted-foreground" />
+                                <p className="text-muted-foreground font-medium">No events found</p>
+                                <p className="text-sm text-muted-foreground">
+                                    Team leaders will create events with tasks here
+                                </p>
+                            </div>
+                        </CardContent>
+                    </Card>
+                )}
             </div >
 
-    <Dialog open={isAssignDialogOpen} onOpenChange={setIsAssignDialogOpen}>
-        <DialogContent>
-            <DialogHeader>
-                <DialogTitle>Assign Members to Task</DialogTitle>
-                <DialogDescription>
-                    Select members from your department to assign to <strong>{selectedTask?.title}</strong>.
-                    Uncheck to remove assignment.
-                </DialogDescription>
-            </DialogHeader>
-            <ScrollArea className="h-[200px] w-full rounded-md border p-4">
-                <div className="space-y-4">
-                    {deptMembers.map(member => (
-                        <div key={member.id} className="flex items-center space-x-2">
-                            <Checkbox
-                                id={`member-${member.id}`}
-                                checked={selectedMembers.includes(member.id)}
-                                onCheckedChange={(checked) => {
-                                    if (checked) {
-                                        setSelectedMembers([...selectedMembers, member.id]);
-                                    } else {
-                                        setSelectedMembers(selectedMembers.filter(id => id !== member.id));
-                                    }
-                                }}
-                            />
-                            <Label htmlFor={`member-${member.id}`} className="flex items-center space-x-2 cursor-pointer w-full">
-                                <Avatar className="h-6 w-6">
-                                    <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                                </Avatar>
-                                <span>{member.name}</span>
-                            </Label>
+            <Dialog open={isAssignDialogOpen} onOpenChange={setIsAssignDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Assign Members to Task</DialogTitle>
+                        <DialogDescription>
+                            Select members from your department to assign to <strong>{selectedTask?.title}</strong>.
+                            Uncheck to remove assignment.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <ScrollArea className="h-[200px] w-full rounded-md border p-4">
+                        <div className="space-y-4">
+                            {deptMembers.map(member => (
+                                <div key={member.id} className="flex items-center space-x-2">
+                                    <Checkbox
+                                        id={`member-${member.id}`}
+                                        checked={selectedMembers.includes(member.id)}
+                                        onCheckedChange={(checked) => {
+                                            if (checked) {
+                                                setSelectedMembers([...selectedMembers, member.id]);
+                                            } else {
+                                                setSelectedMembers(selectedMembers.filter(id => id !== member.id));
+                                            }
+                                        }}
+                                    />
+                                    <Label htmlFor={`member-${member.id}`} className="flex items-center space-x-2 cursor-pointer w-full">
+                                        <Avatar className="h-6 w-6">
+                                            <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                                        </Avatar>
+                                        <span>{member.name}</span>
+                                    </Label>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-            </ScrollArea>
-            <DialogFooter>
-                <Button onClick={handleAssignMembers} className="bg-gradient-to-br from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white border-0">
-                    {selectedMembers.length === 0 ? 'Unassign All' : `Assign Selected (${selectedMembers.length})`}
-                </Button>
-            </DialogFooter>
-        </DialogContent>
-    </Dialog>
+                    </ScrollArea>
+                    <DialogFooter>
+                        <Button onClick={handleAssignMembers} className="bg-gradient-to-br from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white border-0">
+                            {selectedMembers.length === 0 ? 'Unassign All' : `Assign Selected (${selectedMembers.length})`}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div >
     );
 }
