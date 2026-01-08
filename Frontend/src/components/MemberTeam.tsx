@@ -164,20 +164,20 @@ export function MemberTeam({ currentUser }: MemberTeamProps) {
 
     return (
         <div className="space-y-8">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
                 <div>
                     <h1 className="text-2xl font-semibold text-foreground">My Team</h1>
                     <p className="text-muted-foreground mt-2">
                         View all members in your team
                     </p>
                 </div>
-                <Button variant="outline" size="sm" onClick={fetchTeamData} disabled={isLoading}>
+                <Button variant="outline" size="sm" onClick={fetchTeamData} disabled={isLoading} className="w-full md:w-auto">
                     <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
                 </Button>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 {stats.map((stat, index) => (
                     <Card key={index} className="border-0 shadow-sm">
                         <CardHeader className="pb-2">
@@ -197,7 +197,7 @@ export function MemberTeam({ currentUser }: MemberTeamProps) {
             {/* Members Table */}
             <Card className="border-0 shadow-sm">
                 <CardHeader className="pb-4">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
                         <div>
                             <CardTitle className="flex items-center space-x-2">
                                 <Users className="h-5 w-5 text-brand-600" />

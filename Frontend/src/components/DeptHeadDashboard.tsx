@@ -110,20 +110,20 @@ export function DeptHeadDashboard({ currentUser }: DeptHeadDashboardProps) {
 
     return (
         <div className="space-y-8">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
                 <div>
                     <h1 className="text-2xl font-semibold text-foreground">Department Dashboard</h1>
                     <p className="text-muted-foreground mt-2">
                         Overview of your department's performance and activities
                     </p>
                 </div>
-                <Button variant="outline" size="sm" onClick={fetchDashboardData} disabled={isLoading}>
+                <Button variant="outline" size="sm" onClick={fetchDashboardData} disabled={isLoading} className="w-full md:w-auto">
                     <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
                 </Button>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
                 {statsDisplay.map((stat) => {
                     const Icon = stat.icon;
                     return (

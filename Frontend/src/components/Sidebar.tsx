@@ -4,17 +4,20 @@ import {
   LayoutDashboard,
   FileText,
   Users,
-  UserCheck,
   Calendar,
   Settings,
   MessageSquare,
-  Building
+  Building,
+  LogOut
 } from 'lucide-react';
 
 interface SidebarProps {
   currentPage: string;
   userRole: 'admin' | 'team-leader' | 'dept-head' | 'member';
   onNavigate: (page: string) => void;
+  onLogout?: () => void;
+  onClose?: () => void;
+  className?: string;
 }
 
 const navigationItems = {
@@ -51,11 +54,18 @@ const navigationItems = {
   ],
 };
 
-export function Sidebar({ currentPage, userRole, onNavigate }: SidebarProps) {
+export function Sidebar({ currentPage, userRole, onNavigate, onClose, onLogout, className = '' }: SidebarProps) {
   const items = navigationItems[userRole];
 
+  const handleNavigate = (id: string) => {
+    onNavigate(id);
+    if (onClose) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="w-72 bg-background border-r border-border flex flex-col shadow-sm">
+    <div className={`w-72 bg-background border-r border-border flex flex-col shadow-sm ${className}`}>
       <div className="p-8 border-b border-border">
         <div className="flex items-center space-x-3">
           <div className="h-10 w-10 bg-gradient-to-br from-blue-600 to-blue-700 dark:from-purple-600 dark:to-purple-700 rounded-xl flex items-center justify-center">
@@ -82,7 +92,7 @@ export function Sidebar({ currentPage, userRole, onNavigate }: SidebarProps) {
                     ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-r-4 border-blue-600 rounded-r-none dark:!bg-purple-700/20 dark:!text-purple-200 dark:!border-purple-500 dark:hover:!bg-purple-700/30'
                     : 'text-muted-foreground hover:bg-accent hover:text-foreground'
                     }`}
-                  onClick={() => onNavigate(item.id)}
+                  onClick={() => handleNavigate(item.id)}
                 >
                   <Icon className={`mr-3 h-5 w-5 ${isActive ? 'text-brand-400' : 'text-muted-foreground'}`} />
                   <span className={isActive ? 'font-medium' : ''}>{item.label}</span>
@@ -93,7 +103,20 @@ export function Sidebar({ currentPage, userRole, onNavigate }: SidebarProps) {
         </ul>
       </nav>
 
-      <div className="p-6 border-t border-border">
+      <div className="px-6 pb-4">
+        {onLogout && (
+          <Button
+            variant="ghost"
+            className="w-full justify-start px-4 py-3 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/10"
+            onClick={onLogout}
+          >
+            <LogOut className="mr-3 h-5 w-5" />
+            <span className="font-medium">Logout</span>
+          </Button>
+        )}
+      </div>
+
+      <div className="p-4 border-t border-border">
         <div className="text-xs text-muted-foreground text-center">
           TS Manager v1.0
         </div>

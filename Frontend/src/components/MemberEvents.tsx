@@ -115,14 +115,14 @@ export function MemberEvents({ currentUser }: MemberEventsProps) {
 
     return (
         <div className="space-y-8">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
                 <div>
                     <h1 className="text-2xl font-semibold text-foreground">Events</h1>
                     <p className="text-muted-foreground mt-2">
                         View events you're assigned to and all team events
                     </p>
                 </div>
-                <Button variant="outline" size="sm" onClick={fetchEvents} disabled={isLoading}>
+                <Button variant="outline" size="sm" onClick={fetchEvents} disabled={isLoading} className="w-full md:w-auto">
                     <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
                 </Button>
             </div>
@@ -155,15 +155,15 @@ export function MemberEvents({ currentUser }: MemberEventsProps) {
                             const isExpanded = expandedEvents.has(event.id);
                             return (
                                 <div key={event.id} className="p-4 bg-card rounded-xl border hover:shadow-md transition-all">
-                                    <div className="flex items-start justify-between mb-4">
-                                        <div className="flex-1">
+                                    <div className="flex flex-col md:flex-row items-start justify-between mb-4 gap-4 md:gap-0">
+                                        <div className="flex-1 w-full">
                                             <div className="flex items-center space-x-3 mb-2">
                                                 <h4 className="font-semibold text-foreground text-lg">{event.title}</h4>
                                                 <Badge variant="outline" className={getStatusColor('active')}>
                                                     active
                                                 </Badge>
                                             </div>
-                                            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                                                 <span className="flex items-center space-x-1">
                                                     <Calendar className="h-4 w-4" />
                                                     <span>
@@ -200,7 +200,7 @@ export function MemberEvents({ currentUser }: MemberEventsProps) {
                                                 ) : null;
                                             })()}
                                         </div>
-                                        <div className="flex items-center space-x-2">
+                                        <div className="flex items-center space-x-2 w-full md:w-auto justify-end">
                                             <Button variant="ghost" size="sm" onClick={() => toggleEventExpansion(event.id)}>
                                                 {isExpanded ? <ChevronUp className="h-4 w-4 mr-1" /> : <ChevronDown className="h-4 w-4 mr-1" />}
                                                 {isExpanded ? 'Collapse' : 'Expand'}
@@ -285,15 +285,15 @@ export function MemberEvents({ currentUser }: MemberEventsProps) {
                             const isExpanded = expandedEvents.has(event.id);
                             return (
                                 <div key={event.id} className="p-4 bg-card rounded-xl border hover:shadow-md transition-all">
-                                    <div className="flex items-start justify-between mb-4">
-                                        <div className="flex-1">
+                                    <div className="flex flex-col md:flex-row items-start justify-between mb-4 gap-4 md:gap-0">
+                                        <div className="flex-1 w-full">
                                             <div className="flex items-center space-x-3 mb-2">
                                                 <h4 className="font-semibold text-foreground text-lg">{event.title}</h4>
                                                 <Badge variant="outline" className={getStatusColor('active')}>
                                                     active
                                                 </Badge>
                                             </div>
-                                            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                                                 <span className="flex items-center space-x-1">
                                                     <Calendar className="h-4 w-4" />
                                                     <span>
@@ -311,7 +311,7 @@ export function MemberEvents({ currentUser }: MemberEventsProps) {
                                                 </span>
                                             </div>
                                         </div>
-                                        <div className="flex items-center space-x-2">
+                                        <div className="flex items-center space-x-2 w-full md:w-auto justify-end">
                                             <Button variant="ghost" size="sm" onClick={() => toggleEventExpansion(event.id)}>
                                                 {isExpanded ? <ChevronUp className="h-4 w-4 mr-1" /> : <ChevronDown className="h-4 w-4 mr-1" />}
                                                 {isExpanded ? 'Collapse' : 'Expand'}

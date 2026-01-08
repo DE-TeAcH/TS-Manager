@@ -197,20 +197,20 @@ export function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
         <div>
           <h1 className="text-2xl font-semibold text-foreground">Dashboard Overview</h1>
           <p className="text-muted-foreground mt-2">
             Monitor all teams, users, and platform activity from one central location
           </p>
         </div>
-        <Button variant="outline" size="sm" onClick={fetchDashboardData} disabled={isLoading}>
+        <Button variant="outline" size="sm" onClick={fetchDashboardData} disabled={isLoading} className="w-full md:w-auto">
           <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
         </Button>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statsDisplay.map((stat) => {
           const Icon = stat.icon;
           return (
@@ -236,7 +236,7 @@ export function AdminDashboard() {
       {/* Top Teams with Most Events - Full Width */}
       <Card className="border-0 shadow-sm">
         <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
             <div>
               <CardTitle className="flex items-center space-x-2 text-lg">
                 <Trophy className="h-5 w-5 text-yellow-500" />
@@ -250,8 +250,8 @@ export function AdminDashboard() {
         </CardHeader>
         <CardContent className="space-y-4">
           {topTeams.length > 0 ? topTeams.map((team, index) => (
-            <div key={team.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors">
-              <div className="flex items-center space-x-4">
+            <div key={team.id} className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors gap-4 md:gap-0">
+              <div className="flex items-center space-x-4 w-full md:w-auto">
                 <div className="flex items-center justify-center w-8 h-8 rounded-full bg-brand-100 text-brand-600 text-sm font-medium dark:bg-brand-900/20 dark:text-brand-400">
                   #{index + 1}
                 </div>
@@ -268,9 +268,9 @@ export function AdminDashboard() {
                   </p>
                 </div>
               </div>
-              <div className="text-right">
+              <div className="flex flex-row md:flex-col items-center md:items-end justify-start md:justify-end gap-2 md:gap-0 w-full md:w-auto pl-12 md:pl-0">
                 <p className="text-xl font-semibold text-foreground">{team.eventsThisMonth}</p>
-                <p className="text-xs text-muted-foreground">events</p>
+                <p className="text-lg font-semibold text-muted-foreground">events</p>
               </div>
             </div>
           )) : (
@@ -297,8 +297,8 @@ export function AdminDashboard() {
           </CardHeader>
           <CardContent className="space-y-4">
             {latestRequests.length > 0 ? latestRequests.map((request) => (
-              <div key={request.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors">
-                <div className="flex items-center space-x-4">
+              <div key={request.id} className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors gap-4 md:gap-0">
+                <div className="flex items-center space-x-4 w-full md:w-auto">
                   <Avatar className="h-10 w-10">
                     <AvatarFallback className="bg-gradient-to-br from-purple-500 to-pink-500 text-white text-xs">
                       {getInitials(request.teamName)}
@@ -306,7 +306,7 @@ export function AdminDashboard() {
                   </Avatar>
                   <div>
                     <p className="font-medium text-foreground">{request.eventTitle}</p>
-                    <div className="flex items-center space-x-3 text-sm text-muted-foreground">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
                       <span>{request.teamName}</span>
                       <span>•</span>
                       <span>{request.venueName}</span>
@@ -315,7 +315,7 @@ export function AdminDashboard() {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center justify-between w-full md:w-auto md:justify-end space-x-3 pl-14 md:pl-0">
                   <div className="text-right">
                     <Badge variant="outline" className={getStatusColor(request.status)}>
                       {request.status.replace('_', ' ')}
@@ -350,23 +350,23 @@ export function AdminDashboard() {
           </CardHeader>
           <CardContent className="space-y-4">
             {recentEvents.length > 0 ? recentEvents.map((event) => (
-              <div key={event.id} className="p-5 bg-muted/50 rounded-xl hover:bg-muted transition-colors">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-3 flex-1">
-                    <div className="flex items-center space-x-3">
+              <div key={event.id} className="p-4 md:p-5 bg-muted/50 rounded-xl hover:bg-muted transition-colors">
+                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 md:gap-0">
+                  <div className="space-y-3 flex-1 w-full">
+                    <div className="flex items-center justify-between md:justify-start space-x-3">
                       <h4 className="font-medium text-foreground">{event.title}</h4>
                       <Badge variant="outline" className={getStatusColor(event.status)}>
                         {event.status.replace('_', ' ')}
                       </Badge>
                     </div>
-                    <div className="flex items-center space-x-6 text-sm text-muted-foreground">
+                    <div className="flex flex-col md:flex-row md:items-center md:space-x-6 text-sm text-muted-foreground gap-2 md:gap-0">
                       <span className="flex items-center space-x-2">
                         <Building className="h-4 w-4" />
                         <span>{event.team}</span>
                       </span>
                       <span className="flex items-center space-x-2">
                         <Calendar className="h-4 w-4" />
-                        <div className="flex flex-col text-xs space-y-0.5">
+                        <div className="flex flex-col md:flex-col text-xs space-y-0.5">
                           <span>{event.date}</span>
                           {event.endDate && event.endDate !== event.date && <span>{event.endDate}</span>}
                         </div>
@@ -381,7 +381,7 @@ export function AdminDashboard() {
                       </span>
                     </div>
                   </div>
-                  <Button size="sm" variant="ghost" className="text-muted-foreground hover:text-foreground" onClick={() => setSelectedEvent(event)}>
+                  <Button size="sm" variant="ghost" className="text-muted-foreground hover:text-foreground w-full md:w-auto mt-2 md:mt-0" onClick={() => setSelectedEvent(event)}>
                     View Details
                   </Button>
                 </div>

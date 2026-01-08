@@ -327,18 +327,18 @@ export function TeamLeaderEvents({ currentUser }: TeamLeaderEventsProps) {
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
                 <div>
                     <h1 className="text-2xl font-semibold text-foreground">Team Events</h1>
                     <p className="text-muted-foreground mt-2">Manage your team's events and tasks</p>
                 </div>
-                <div className="flex space-x-2">
-                    <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading}>
+                <div className="flex flex-col md:flex-row gap-2">
+                    <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading} className="w-full md:w-auto">
                         <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
                     </Button>
                     <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
                         <DialogTrigger asChild>
-                            <Button className="bg-gradient-to-br from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white border-0">
+                            <Button className="bg-gradient-to-br from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white border-0 w-full md:w-auto">
                                 <Plus className="h-4 w-4 mr-2" />
                                 Create Event
                             </Button>
@@ -442,15 +442,15 @@ export function TeamLeaderEvents({ currentUser }: TeamLeaderEventsProps) {
                         return (
                             <Card key={event.id} className="border-0 shadow-sm">
                                 <CardHeader className="pb-4">
-                                    <div className="flex items-start justify-between">
-                                        <div className="flex-1">
+                                    <div className="flex flex-col md:flex-row items-start justify-between gap-4 md:gap-0">
+                                        <div className="flex-1 w-full">
                                             <div className="flex items-center space-x-3 mb-2">
                                                 <CardTitle className="text-lg">{event.name}</CardTitle>
                                                 <Badge variant="outline" className={getStatusColor(event.status)}>
                                                     {event.status === 'pending' ? 'Pending Approval' : event.status}
                                                 </Badge>
                                             </div>
-                                            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                                                 <span className="flex items-center space-x-1">
                                                     <Calendar className="h-4 w-4" />
                                                     <span>
@@ -470,7 +470,7 @@ export function TeamLeaderEvents({ currentUser }: TeamLeaderEventsProps) {
                                                 </span>
                                             </div>
                                         </div>
-                                        <div className="flex items-center space-x-2">
+                                        <div className="flex items-center space-x-2 w-full md:w-auto justify-end">
                                             <Button variant="ghost" size="sm" onClick={() => toggleEventExpansion(event.id)}>
                                                 {isExpanded ? <ChevronUp className="h-4 w-4 mr-1" /> : <ChevronDown className="h-4 w-4 mr-1" />}
                                                 {isExpanded ? 'Collapse' : 'Expand'}

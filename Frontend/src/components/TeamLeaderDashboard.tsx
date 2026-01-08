@@ -182,20 +182,20 @@ export function TeamLeaderDashboard({ currentUser }: TeamLeaderDashboardProps) {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
         <div>
           <h1 className="text-2xl font-semibold text-foreground">Team Dashboard</h1>
           <p className="text-muted-foreground mt-2">
             Overview of your team's performance and recent activities
           </p>
         </div>
-        <Button variant="outline" size="sm" onClick={fetchDashboardData} disabled={isLoading}>
+        <Button variant="outline" size="sm" onClick={fetchDashboardData} disabled={isLoading} className="w-full md:w-auto">
           <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
         </Button>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
         {statsDisplay.map((stat) => {
           const Icon = stat.icon;
           return (
@@ -222,11 +222,11 @@ export function TeamLeaderDashboard({ currentUser }: TeamLeaderDashboardProps) {
         {/* Recent Team Members */}
         <Card className="border-0 shadow-sm">
           <CardHeader className="pb-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
               <div>
                 <CardTitle className="flex items-center space-x-2 text-lg">
                   <Users className="h-5 w-5 text-blue-500" />
-                  <span>Recent Team Members</span>
+                  <span className="text-lg font-semibold">Recent Team Members</span>
                 </CardTitle>
                 <CardDescription className="mt-1">
                   Latest members who joined your team
@@ -236,8 +236,8 @@ export function TeamLeaderDashboard({ currentUser }: TeamLeaderDashboardProps) {
           </CardHeader>
           <CardContent className="space-y-4">
             {recentMembers.length > 0 ? recentMembers.map((member) => (
-              <div key={member.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors">
-                <div className="flex items-center space-x-4">
+              <div key={member.id} className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors gap-4 md:gap-0">
+                <div className="flex items-center space-x-4 w-full md:w-auto">
                   <Avatar className="h-10 w-10">
                     <AvatarImage src={member.avatar || ''} alt={member.name} />
                     <AvatarFallback className="bg-gradient-to-br from-brand-500 to-purple-600 text-white text-xs">
@@ -249,7 +249,7 @@ export function TeamLeaderDashboard({ currentUser }: TeamLeaderDashboardProps) {
                     <p className="text-sm text-muted-foreground">{member.department}</p>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className="text-left md:text-right w-full md:w-auto pl-14 md:pl-0">
                   <Badge variant="outline" className={getRoleColor(member.role)}>
                     {member.role.replace('-', ' ')}
                   </Badge>
@@ -265,11 +265,11 @@ export function TeamLeaderDashboard({ currentUser }: TeamLeaderDashboardProps) {
         {/* Upcoming Events */}
         <Card className="border-0 shadow-sm">
           <CardHeader className="pb-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
               <div>
                 <CardTitle className="flex items-center space-x-2 text-lg">
                   <Calendar className="h-5 w-5 text-purple-500" />
-                  <span>Upcoming Events</span>
+                  <span className="text-lg font-semibold">Upcoming Events</span>
                 </CardTitle>
                 <CardDescription className="mt-1">
                   Events scheduled for your team

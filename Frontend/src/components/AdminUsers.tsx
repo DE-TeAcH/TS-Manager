@@ -419,14 +419,14 @@ export function AdminUsers() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
         <div>
           <h1 className="text-2xl font-semibold text-foreground">Users Management</h1>
           <p className="text-muted-foreground mt-2">
             Manage all platform users, their roles, and team assignments
           </p>
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 w-full md:w-auto">
           <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading}>
             <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
@@ -579,7 +579,7 @@ export function AdminUsers() {
 
       <Card className="border-0 shadow-sm">
         <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
             <div>
               <CardTitle className="flex items-center space-x-2">
                 <Users className="h-5 w-5 text-brand-600" />
@@ -589,26 +589,26 @@ export function AdminUsers() {
                 Manage user accounts, roles, and team assignments
               </CardDescription>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="relative">
+            <div className="flex items-center space-x-4 w-full md:w-auto">
+              <div className="relative w-full md:w-auto">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   placeholder="Search users..."
                   value={searchQuery}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-                  className="pl-10 w-64"
+                  className="pl-10 w-full md:w-64"
                 />
               </div>
             </div>
           </div>
-          <div className="flex items-center space-x-2 mt-4">
+          <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-2 mt-4">
             <Label htmlFor="sort-users" className="text-sm text-muted-foreground">Sort by:</Label>
             <Select value={`${sortField}-${sortDirection}`} onValueChange={(value: string) => {
               const [field, direction] = value.split('-') as [SortField, SortDirection];
               setSortField(field);
               setSortDirection(direction);
             }}>
-              <SelectTrigger className="w-48">
+              <SelectTrigger className="w-full md:w-48">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

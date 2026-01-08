@@ -53,7 +53,7 @@ export function AdminRequests() {
 
   return (
     <div className="space-y-6" style={{ padding: '24px' }}>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
         <div>
           <h1>Venue Booking Requests</h1>
           <p className="text-muted-foreground" style={{ marginTop: '8px' }}>
@@ -94,7 +94,7 @@ export function AdminRequests() {
               <div className="space-y-4">
                 {/* Venue and Date Information */}
                 <div className="bg-gray-50 rounded-lg" style={{ padding: '16px' }}>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-3">
                       <div className="flex items-start space-x-2">
                         <MapPin className="h-4 w-4 text-muted-foreground" style={{ marginTop: '2px' }} />

@@ -254,19 +254,19 @@ export function TeamLeaderChats({ userId, userName, teamId }: TeamLeaderChatsPro
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
         <div>
           <h1 className="text-2xl font-semibold text-foreground">Messages</h1>
           <p className="text-muted-foreground mt-2">
             Chat with your department heads
           </p>
         </div>
-        <div className="flex space-x-2">
-          <Button variant="outline" size="sm" onClick={() => setShowNewChatDialog(true)}>
+        <div className="flex flex-col md:flex-row gap-2">
+          <Button variant="outline" size="sm" onClick={() => setShowNewChatDialog(true)} className="w-full md:w-auto">
             <Plus className="h-4 w-4 mr-1" />
             New Chat
           </Button>
-          <Button variant="outline" size="sm" onClick={fetchChats} disabled={isLoading}>
+          <Button variant="outline" size="sm" onClick={fetchChats} disabled={isLoading} className="w-full md:w-auto">
             <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
         </div>
@@ -328,11 +328,16 @@ export function TeamLeaderChats({ userId, userName, teamId }: TeamLeaderChatsPro
                             <Badge variant="outline" className="text-xs text-green-700 border-green-300 bg-green-100 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800">Dept Head</Badge>
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground">{formatLastMessageTime(chat.last_message_time)}</p>
                       </div>
-                      <p className="text-sm text-muted-foreground truncate mt-1">
-                        {chat.last_message || <span className="italic text-muted-foreground/50">No messages yet</span>}
-                      </p>
+                      <div className="flex justify-between items-center mt-1 min-w-0">
+                        <p className="text-sm text-muted-foreground truncate flex-1 mr-2 min-w-0">
+                          {(() => {
+                            const msg = chat.last_message || 'No messages yet';
+                            return msg.length > 23 ? msg.substring(0, 23) + '...' : msg;
+                          })()}
+                        </p>
+                        <p className="text-xs text-muted-foreground whitespace-nowrap flex-shrink-0">{formatLastMessageTime(chat.last_message_time)}</p>
+                      </div>
                     </div>
                   </div>
                   {chat.type === 'private' && (
@@ -340,7 +345,7 @@ export function TeamLeaderChats({ userId, userName, teamId }: TeamLeaderChatsPro
                       variant="ghost"
                       size="sm"
                       onClick={(e) => handleClearChat(chat, e)}
-                      className="opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-700 hover:bg-red-50 transition-opacity"
+                      className="opacity-100 md:opacity-0 md:group-hover:opacity-100 text-red-500 hover:text-red-700 hover:bg-red-50 transition-opacity"
                       title="Clear all messages"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -400,7 +405,7 @@ export function TeamLeaderChats({ userId, userName, teamId }: TeamLeaderChatsPro
 
       {/* Chat Dialog */}
       <Dialog open={selectedChat !== null} onOpenChange={() => setSelectedChat(null)}>
-        <DialogContent className="sm:max-w-[600px] h-[600px] flex flex-col p-0">
+        <DialogContent className="sm:max-w-[600px] h-[80vh] md:h-[600px] flex flex-col p-0">
           {selectedChat && (
             <>
               <DialogHeader className="p-6 pb-0">
@@ -438,11 +443,13 @@ export function TeamLeaderChats({ userId, userName, teamId }: TeamLeaderChatsPro
                             : 'bg-muted text-foreground'
                             }`}
                         >
-                          <p className="text-sm">{message.content}</p>
-                          <p className={`text-xs mt-1 ${message.sender_id === userId ? 'text-blue-200' : 'text-muted-foreground'
-                            }`}>
-                            {formatMessageTime(message.created_at)}
-                          </p>
+                          <div className="flex flex-wrap items-end gap-x-2">
+                            <p className="text-sm line-clamp-4 break-words">{message.content}</p>
+                            <span className={`text-[11px] ml-auto ${message.sender_id === userId ? 'text-blue-100' : 'text-muted-foreground'
+                              }`}>
+                              {formatMessageTime(message.created_at)}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     ))

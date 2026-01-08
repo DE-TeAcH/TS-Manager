@@ -264,148 +264,156 @@ export function DeptHeadEvents({ currentUser }: DeptHeadEventsProps) {
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
                 <div>
                     <h1 className="text-2xl font-semibold text-foreground">Department Events</h1>
                     <p className="text-muted-foreground mt-2">View events and assign members to tasks</p>
                 </div>
-                <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading}>
+                <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading} className="w-full md:w-auto">
                     <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
                 </Button>
             </div>
 
             <div className="space-y-4">
-                {events.map((event) => {
-                    const isExpanded = expandedEvents.has(event.id);
-                    return (
-                        <Card key={event.id} className="border-0 shadow-sm">
-                            <CardHeader className="pb-4">
-                                <div className="flex items-start justify-between">
-                                    <div className="flex-1">
-                                        <div className="flex items-center space-x-3 mb-2">
-                                            <CardTitle className="text-lg">{event.name}</CardTitle>
-                                            <Badge variant="outline" className={getStatusColor(event.status)}>
-                                                {event.status === 'pending' ? 'Pending Approval' : event.status}
-                                            </Badge>
-                                        </div>
-                                        <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                                            <span className="flex items-center space-x-1">
-                                                <Calendar className="h-4 w-4" />
-                                                <span>
-                                                    {formatDate(event.startDate)}
-                                                    {event.endDate && event.endDate !== event.startDate && ` - ${formatDate(event.endDate)}`}
-                                                </span>
-                                            </span>
-                                            {event.location && (
+                {events.length > 0 ? (
+                    events.map((event) => {
+                        const isExpanded = expandedEvents.has(event.id);
+                        return (
+                            <Card key={event.id} className="border-0 shadow-sm">
+                                <CardHeader className="pb-4">
+                                    <div className="flex items-start justify-between">
+                                        <div className="flex-1">
+                                            <div className="flex items-center space-x-3 mb-2">
+                                                <CardTitle className="text-lg">{event.name}</CardTitle>
+                                                <Badge variant="outline" className={getStatusColor(event.status)}>
+                                                    {event.status === 'pending' ? 'Pending Approval' : event.status}
+                                                </Badge>
+                                            </div>
+                                            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                                                 <span className="flex items-center space-x-1">
-                                                    <MapPin className="h-4 w-4" />
-                                                    <span>{event.location}</span>
+                                                    <Calendar className="h-4 w-4" />
+                                                    <span>
+                                                        {formatDate(event.startDate)}
+                                                        {event.endDate && event.endDate !== event.startDate && ` - ${formatDate(event.endDate)}`}
+                                                    </span>
                                                 </span>
-                                            )}
-                                            <span className="flex items-center space-x-1">
-                                                <ListTodo className="h-4 w-4" />
-                                                <span>{event.tasks.length} tasks</span>
-                                            </span>
+                                                {event.location && (
+                                                    <span className="flex items-center space-x-1">
+                                                        <MapPin className="h-4 w-4" />
+                                                        <span>{event.location}</span>
+                                                    </span>
+                                                )}
+                                                <span className="flex items-center space-x-1">
+                                                    <ListTodo className="h-4 w-4" />
+                                                    <span>{event.tasks.length} tasks</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <Button variant="ghost" size="sm" onClick={() => toggleEventExpansion(event.id)}>
+                                                {isExpanded ? <ChevronUp className="h-4 w-4 mr-1" /> : <ChevronDown className="h-4 w-4 mr-1" />}
+                                                {isExpanded ? 'Collapse' : 'Expand'}
+                                            </Button>
                                         </div>
                                     </div>
-                                    <div className="flex items-center space-x-2">
-                                        <Button variant="ghost" size="sm" onClick={() => toggleEventExpansion(event.id)}>
-                                            {isExpanded ? <ChevronUp className="h-4 w-4 mr-1" /> : <ChevronDown className="h-4 w-4 mr-1" />}
-                                            {isExpanded ? 'Collapse' : 'Expand'}
-                                        </Button>
-                                    </div>
-                                </div>
-                            </CardHeader>
-                            {isExpanded && (
-                                <CardContent>
-                                    <div className="space-y-4">
-                                        <h4 className="font-medium">Tasks</h4>
-                                        <div className="space-y-2">
-                                            {event.tasks.map(task => (
-                                                <div key={task.id} className="border rounded-lg p-4">
-                                                    <div className="flex justify-between items-start mb-2">
-                                                        <h5 className="font-semibold text-foreground">{task.title}</h5>
-                                                        <Badge variant="secondary" className="bg-muted text-muted-foreground hover:bg-muted/80">
-                                                            {task.assignedDepartment}
-                                                        </Badge>
-                                                    </div>
+                                </CardHeader>
+                                {isExpanded && (
+                                    <CardContent>
+                                        <div className="space-y-4">
+                                            <h4 className="font-medium">Tasks</h4>
+                                            <div className="space-y-2">
+                                                {event.tasks.map(task => (
+                                                    <div key={task.id} className="border rounded-lg p-4">
+                                                        <div className="flex justify-between items-start mb-2">
+                                                            <h5 className="font-semibold text-foreground">{task.title}</h5>
+                                                            <Badge variant="secondary" className="bg-muted text-muted-foreground hover:bg-muted/80">
+                                                                {task.assignedDepartment}
+                                                            </Badge>
+                                                        </div>
 
-                                                    <p className="text-sm text-muted-foreground mb-4">{task.description}</p>
+                                                        <p className="text-sm text-muted-foreground mb-4">{task.description}</p>
 
-                                                    <div className="space-y-2">
-                                                        <span className="text-xs text-muted-foreground font-medium">Assigned to:</span>
-                                                        <div className="flex flex-wrap items-center gap-2">
-                                                            {task.assignedMembers.length > 0 ? (
-                                                                <>
-                                                                    {task.assignedMembers.map(member => (
-                                                                        <div key={member.id} className="flex items-center space-x-2 bg-muted/50 border border-border rounded-full pl-1 pr-3 py-1">
-                                                                            <Avatar className="h-6 w-6">
-                                                                                <AvatarFallback className="text-[10px] bg-muted/80 text-muted-foreground">
-                                                                                    {member.name.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase()}
-                                                                                </AvatarFallback>
-                                                                            </Avatar>
-                                                                            <span className="text-xs font-medium text-foreground">{member.name}</span>
-                                                                        </div>
-                                                                    ))}
-                                                                    {isTaskForMyDept(task) && task.status === 'pending' && (
+                                                        <div className="space-y-2">
+                                                            <span className="text-xs text-muted-foreground font-medium">Assigned to:</span>
+                                                            <div className="flex flex-wrap items-center gap-2">
+                                                                {task.assignedMembers.length > 0 ? (
+                                                                    <>
+                                                                        {task.assignedMembers.map(member => (
+                                                                            <div key={member.id} className="flex items-center space-x-2 bg-muted/50 border border-border rounded-full pl-1 pr-3 py-1">
+                                                                                <Avatar className="h-6 w-6">
+                                                                                    <AvatarFallback className="text-[10px] bg-muted/80 text-muted-foreground">
+                                                                                        {member.name.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase()}
+                                                                                    </AvatarFallback>
+                                                                                </Avatar>
+                                                                                <span className="text-xs font-medium text-foreground">{member.name}</span>
+                                                                            </div>
+                                                                        ))}
+                                                                        {isTaskForMyDept(task) && task.status === 'pending' && (
+                                                                            <Button
+                                                                                variant="ghost"
+                                                                                size="icon"
+                                                                                className="h-6 w-6 rounded-full hover:bg-muted"
+                                                                                onClick={() => {
+                                                                                    setSelectedTask(task);
+                                                                                    setSelectedMembers(task.assignedMembers.map(m => m.id));
+                                                                                    setIsAssignDialogOpen(true);
+                                                                                }}
+                                                                            >
+                                                                                <UserPlus className="h-3 w-3 text-muted-foreground" />
+                                                                            </Button>
+                                                                        )}
+                                                                    </>
+                                                                ) : (
+                                                                    isTaskForMyDept(task) ? (
                                                                         <Button
-                                                                            variant="ghost"
-                                                                            size="icon"
-                                                                            className="h-6 w-6 rounded-full hover:bg-muted"
+                                                                            size="sm"
+                                                                            variant="outline"
                                                                             onClick={() => {
                                                                                 setSelectedTask(task);
-                                                                                setSelectedMembers(task.assignedMembers.map(m => m.id));
+                                                                                setSelectedMembers([]);
                                                                                 setIsAssignDialogOpen(true);
                                                                             }}
+                                                                            disabled={task.status !== 'pending'}
+                                                                            className="h-8"
                                                                         >
-                                                                            <UserPlus className="h-3 w-3 text-muted-foreground" />
+                                                                            <UserPlus className="h-3 w-3 mr-1" /> Assign
                                                                         </Button>
-                                                                    )}
-                                                                </>
-                                                            ) : (
-                                                                isTaskForMyDept(task) ? (
-                                                                    <Button
-                                                                        size="sm"
-                                                                        variant="outline"
-                                                                        onClick={() => {
-                                                                            setSelectedTask(task);
-                                                                            setSelectedMembers([]);
-                                                                            setIsAssignDialogOpen(true);
-                                                                        }}
-                                                                        disabled={task.status !== 'pending'}
-                                                                        className="h-8"
-                                                                    >
-                                                                        <UserPlus className="h-3 w-3 mr-1" /> Assign
-                                                                    </Button>
-                                                                ) : (
-                                                                    <span className="text-sm text-muted-foreground italic">Unassigned</span>
-                                                                )
-                                                            )}
+                                                                    ) : (
+                                                                        <span className="text-sm text-muted-foreground italic">Unassigned</span>
+                                                                    )
+                                                                )}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            ))}
-                                            {event.tasks.length === 0 && (
-                                                <p className="text-sm text-muted-foreground text-center py-2">No tasks added yet.</p>
-                                            )}
-                                            {event.tasks.some(t => isTaskForMyDept(t)) && (
-                                                <div className="flex justify-end mt-4">
-                                                    <Button
-                                                        onClick={() => handleFinishAssigning(event)}
-                                                        disabled={event.tasks.filter(t => isTaskForMyDept(t)).every(t => t.status !== 'pending')}
-                                                        className="bg-gradient-to-br from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white border-0"
-                                                    >
-                                                        Finish Assigning
-                                                    </Button>
-                                                </div>
-                                            )}
+                                                ))}
+                                                {event.tasks.length === 0 && (
+                                                    <p className="text-sm text-muted-foreground text-center py-2">No tasks added yet.</p>
+                                                )}
+                                                {event.tasks.some(t => isTaskForMyDept(t)) && (
+                                                    <div className="flex justify-end mt-4">
+                                                        <Button
+                                                            onClick={() => handleFinishAssigning(event)}
+                                                            disabled={event.tasks.filter(t => isTaskForMyDept(t)).every(t => t.status !== 'pending')}
+                                                            className="bg-gradient-to-br from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white border-0"
+                                                        >
+                                                            Finish Assigning
+                                                        </Button>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                </CardContent>
-                            )}
-                        </Card>
-                    );
-                })}
+                                    </CardContent>
+                                )}
+                            </Card>
+                        );
+                    })
+                ) : (
+                    <div className="text-center py-12 bg-white dark:bg-muted/10 rounded-xl border border-dashed border-gray-200 dark:border-gray-800">
+                        <Calendar className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
+                        <h3 className="text-lg font-medium text-foreground">No events scheduled</h3>
+                        <p className="text-muted-foreground mt-1">There are no upcoming events for your department's team.</p>
+                    </div>
+                )}
             </div>
 
             <Dialog open={isAssignDialogOpen} onOpenChange={setIsAssignDialogOpen}>

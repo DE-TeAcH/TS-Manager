@@ -340,7 +340,7 @@ export function MemberSettings({ currentUser, onLogout, onProfileUpdate }: Membe
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div className="flex items-center justify-between p-4 border border-red-200 dark:border-red-900/30 rounded-lg bg-red-50 dark:bg-red-900/10">
+                        <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border border-red-200 dark:border-red-900/30 rounded-lg bg-red-50 dark:bg-red-900/10 gap-4 md:gap-0">
                             <div>
                                 <h4 className="font-medium text-red-900 dark:text-red-200">Delete Account</h4>
                                 <p className="text-sm text-red-700 dark:text-red-400 mt-1">
@@ -350,7 +350,7 @@ export function MemberSettings({ currentUser, onLogout, onProfileUpdate }: Membe
                             <Button
                                 variant="destructive"
                                 onClick={() => setIsDeleteDialogOpen(true)}
-                                className="flex items-center space-x-2"
+                                className="flex items-center space-x-2 w-full md:w-auto"
                             >
                                 <Trash2 className="h-4 w-4" />
                                 <span>Delete Account</span>

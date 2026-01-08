@@ -257,15 +257,15 @@ export function AdminEvents() {
   };
 
   return (
-    <div className="space-y-6" style={{ padding: '24px' }}>
-      <div className="flex items-center justify-between">
+    <div className="space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
         <div>
           <h1>Events Management</h1>
           <p className="text-muted-foreground" style={{ marginTop: '8px' }}>
             Manage events and their tasks assigned to departments
           </p>
         </div>
-        <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading}>
+        <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading} className="w-full md:w-auto">
           <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
         </Button>
       </div>
@@ -295,7 +295,7 @@ export function AdminEvents() {
       {/* Filters */}
       <Card className="border-0 shadow-sm">
         <CardContent style={{ padding: '16px' }}>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4">
             <div className="flex-1">
               <label className="text-sm font-medium" style={{ marginBottom: '8px', display: 'block' }}>Filter by Team</label>
               <select
@@ -344,17 +344,18 @@ export function AdminEvents() {
           return (
             <Card key={event.id} className="border-0 shadow-sm" style={{ borderRadius: '10px' }}>
               <CardHeader style={{ paddingBottom: '16px' }}>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-3" style={{ marginBottom: '8px' }}>
-                      <CardTitle className="text-lg" style={{ fontWeight: '500' }}>
-                        {event.name}
-                      </CardTitle>
-                      <Badge variant="outline" className={getStatusColor(event.status)}>
+                <div className="flex flex-col md:flex-row items-start justify-between gap-4 md:gap-0 relative">
+                  <div className="flex-1 w-full relative">
+                    <div className="flex items-center space-x-3 mb-2 pr-20 md:pr-0">
+                      <CardTitle className="text-lg font-medium">{event.name}</CardTitle>
+                      <Badge variant="outline" className={`hidden md:inline-flex ${getStatusColor(event.status)}`}>
+                        {event.status}
+                      </Badge>
+                      <Badge variant="outline" className={`md:hidden absolute top-0 right-0 ${getStatusColor(event.status)}`}>
                         {event.status}
                       </Badge>
                     </div>
-                    <div className="flex items-center space-x-4 text-sm text-muted-foreground" style={{ marginTop: '8px' }}>
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground mt-2 md:mt-0">
                       <span className="flex items-center space-x-1">
                         <Building className="h-4 w-4" />
                         <span>{event.team}</span>
@@ -369,46 +370,46 @@ export function AdminEvents() {
                       </span>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center w-full md:w-auto justify-between md:justify-end gap-2 mt-4 md:mt-0">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => toggleEventExpansion(event.id)}
-                      style={{ fontWeight: '500' }}
+                      className="font-medium"
                     >
                       {isExpanded ? (
                         <>
-                          <ChevronUp className="h-4 w-4" style={{ marginRight: '4px' }} />
-                          Collapse
+                          <ChevronUp className="h-4 w-4" />
+                          <span className="hidden md:inline ml-1">Collapse</span>
                         </>
                       ) : (
                         <>
-                          <ChevronDown className="h-4 w-4" style={{ marginRight: '4px' }} />
-                          Expand
+                          <ChevronDown className="h-4 w-4" />
+                          <span className="hidden md:inline ml-1">Expand</span>
                         </>
                       )}
                     </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setSelectedEvent(event)}
-                    >
-                      Details
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-gray-400 hover:text-red-600 hover:bg-red-50"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        // Assuming event object has the name. If it's `event.title` on API but mapped to `name` in state.
-                        // Checked `AdminEvents.tsx` logic: mapped as `name: e.title`. So `event.name` is correct.
-                        handleDeleteEvent(event.id, event.name);
-                      }}
-                      title="Delete Event"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setSelectedEvent(event)}
+                      >
+                        <Eye className="h-4 w-4 md:mr-1" /> <span className="hidden md:inline">Details</span>
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-gray-400 hover:text-red-600 hover:bg-red-50"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteEvent(event.id, event.name);
+                        }}
+                        title="Delete Event"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </CardHeader>
@@ -419,7 +420,7 @@ export function AdminEvents() {
                     <div className="space-y-4">
                       {/* Event Overview */}
                       <div className="bg-muted/50 rounded-lg" style={{ padding: '16px' }}>
-                        <div className="grid grid-cols-3 gap-4 text-sm">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                           <div className="flex items-center space-x-2">
                             <Calendar className="h-4 w-4 text-muted-foreground" />
                             <div>
@@ -588,7 +589,7 @@ export function AdminEvents() {
                   <Separator />
 
                   {/* Event Details */}
-                  <div className="grid grid-cols-2 gap-6 text-sm">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
                     <div>
                       <p className="text-xs text-muted-foreground" style={{ marginBottom: '4px' }}>Team</p>
                       <p style={{ fontWeight: '500' }}>{selectedEvent.team}</p>

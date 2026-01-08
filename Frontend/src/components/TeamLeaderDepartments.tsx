@@ -200,20 +200,20 @@ export function TeamLeaderDepartments({ currentUser }: TeamLeaderDepartmentsProp
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
         <div>
           <h1 className="text-2xl font-semibold text-foreground">Departments</h1>
           <p className="text-muted-foreground mt-2">
             Manage your team's departments and department heads
           </p>
         </div>
-        <div className="flex items-center space-x-3">
-          <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading}>
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+          <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading} className="hidden md:flex">
             <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
 
           <Select value={filter} onValueChange={setFilter}>
-            <SelectTrigger className="w-[160px]">
+            <SelectTrigger className="w-full md:w-[160px]">
               <div className="flex items-center gap-2">
                 <Filter className="h-4 w-4" />
                 <SelectValue placeholder="Filter" />
@@ -288,7 +288,7 @@ export function TeamLeaderDepartments({ currentUser }: TeamLeaderDepartmentsProp
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
         <Card className="border-0 shadow-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Departments</CardTitle>
@@ -332,7 +332,7 @@ export function TeamLeaderDepartments({ currentUser }: TeamLeaderDepartmentsProp
       {/* Departments List */}
       <Card className="border-0 shadow-sm">
         <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
             <div>
               <CardTitle>Department Management</CardTitle>
               <CardDescription>

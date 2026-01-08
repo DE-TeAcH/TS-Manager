@@ -59,20 +59,20 @@ export function DeptHeadMembers({ currentUser }: DeptHeadMembersProps) {
 
     return (
         <div className="space-y-8">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
                 <div>
                     <h1 className="text-2xl font-semibold text-foreground">Department Members</h1>
                     <p className="text-muted-foreground mt-2">
                         Manage members in your department
                     </p>
                 </div>
-                <Button variant="outline" size="sm" onClick={fetchMembers} disabled={isLoading}>
+                <Button variant="outline" size="sm" onClick={fetchMembers} disabled={isLoading} className="w-full md:w-auto">
                     <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
                 </Button>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 <Card className="border-0 shadow-sm">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-muted-foreground">Total Members</CardTitle>

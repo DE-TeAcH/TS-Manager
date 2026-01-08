@@ -363,15 +363,15 @@ export function TeamLeaderTeam({ currentUser }: TeamLeaderTeamProps) {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
         <div>
           <h1 className="text-2xl font-semibold text-foreground">My Team</h1>
           <p className="text-muted-foreground mt-2">
             Manage your team members and departments
           </p>
         </div>
-        <div className="flex items-center space-x-4">
-          <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading}>
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4 w-full md:w-auto">
+          <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading} className="hidden md:flex">
             <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
@@ -484,7 +484,7 @@ export function TeamLeaderTeam({ currentUser }: TeamLeaderTeamProps) {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
         {stats.map((stat, index) => (
           <Card key={index} className="border-0 shadow-sm">
             <CardHeader className="pb-2">
@@ -504,13 +504,13 @@ export function TeamLeaderTeam({ currentUser }: TeamLeaderTeamProps) {
       {/* Members Table */}
       <Card className="border-0 shadow-sm">
         <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
             <div>
               <CardTitle className="flex items-center space-x-2">
                 <Users className="h-5 w-5 text-brand-600" />
-                <span>Team Members ({sortedAndFilteredMembers.length})</span>
+                <span className="text-lg font-semibold">Team Members ({sortedAndFilteredMembers.length})</span>
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="mt-2 text-sm text-muted-foreground">
                 Manage your team members and their roles
               </CardDescription>
             </div>
