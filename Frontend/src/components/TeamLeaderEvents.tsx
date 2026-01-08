@@ -203,6 +203,19 @@ export function TeamLeaderEvents({ currentUser }: TeamLeaderEventsProps) {
     }, [currentUser]);
 
     const handleCreateEvent = async () => {
+        // Validate Time Logic
+        if (newEvent.startTime && newEvent.endTime) {
+            // Assume dates are YYYY-MM-DD
+            const startDateTime = new Date(`${newEvent.date}T${newEvent.startTime}`);
+            const endDateTime = new Date(`${newEvent.endDate || newEvent.date}T${newEvent.endTime}`);
+
+            // If end date is same as start date (or not mapped), strictly validate time
+            if (endDateTime <= startDateTime) {
+                alert('End time must be after start time.');
+                return;
+            }
+        }
+
         try {
             const eventData = {
                 title: newEvent.title,

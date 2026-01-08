@@ -37,10 +37,13 @@ interface User {
 }
 
 const STORAGE_KEY = 'currentUser';
+const PAGE_STORAGE_KEY = 'currentPage';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [currentPage, setCurrentPage] = useState(() => {
+    return localStorage.getItem(PAGE_STORAGE_KEY) || 'dashboard';
+  });
   const [isLoading, setIsLoading] = useState(true);
 
   // Restore user session from localStorage on mount
@@ -66,6 +69,7 @@ export default function App() {
     // Persist user session to localStorage
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+      localStorage.setItem(PAGE_STORAGE_KEY, 'dashboard');
     } catch (error) {
       console.error('Failed to save user session:', error);
     }
@@ -77,6 +81,7 @@ export default function App() {
     // Clear user session from localStorage
     try {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(PAGE_STORAGE_KEY);
     } catch (error) {
       console.error('Failed to clear user session:', error);
     }
@@ -84,6 +89,7 @@ export default function App() {
 
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
+    localStorage.setItem(PAGE_STORAGE_KEY, page);
   };
 
   const handleProfileUpdate = (updatedUser: Partial<User>) => {

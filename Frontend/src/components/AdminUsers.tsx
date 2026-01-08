@@ -367,6 +367,16 @@ export function AdminUsers() {
   };
 
   const handleAddUser = async () => {
+    // Validate Bac Year vs Join Date
+    if (newUser.joinDate && newUser.bacYear) {
+      const joinYear = new Date(newUser.joinDate).getFullYear();
+      const bacYearNum = Number(newUser.bacYear);
+      if (joinYear < bacYearNum) {
+        alert('Join date cannot be before the Baccalaureate year.');
+        return;
+      }
+    }
+
     if (newUser.name && newUser.username && newUser.password && newUser.email && newUser.team) {
       try {
         const selectedTeam = teamsList.find(t => t.name === newUser.team);
