@@ -51,7 +51,14 @@ export default function App() {
     try {
       const savedUser = localStorage.getItem(STORAGE_KEY);
       if (savedUser) {
-        const userData = JSON.parse(savedUser);
+        let userData = JSON.parse(savedUser);
+
+        // Migration: Handle snake_case from legacy PHP backend if present
+        if (!userData.teamName && userData.team_name) userData.teamName = userData.team_name;
+        if (!userData.departmentName && userData.department_name) userData.departmentName = userData.department_name;
+        if (!userData.teamId && userData.team_id) userData.teamId = userData.team_id;
+        if (!userData.departmentId && userData.department_id) userData.departmentId = userData.department_id;
+
         setCurrentUser(userData);
       }
     } catch (error) {

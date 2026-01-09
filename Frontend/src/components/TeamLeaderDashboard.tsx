@@ -236,20 +236,20 @@ export function TeamLeaderDashboard({ currentUser }: TeamLeaderDashboardProps) {
           </CardHeader>
           <CardContent className="space-y-4">
             {recentMembers.length > 0 ? recentMembers.map((member) => (
-              <div key={member.id} className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors gap-4 md:gap-0">
-                <div className="flex items-center space-x-4 w-full md:w-auto">
-                  <Avatar className="h-10 w-10">
+              <div key={member.id} className="flex flex-row items-center justify-between p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors gap-4">
+                <div className="flex items-center space-x-4 min-w-0">
+                  <Avatar className="h-10 w-10 flex-shrink-0">
                     <AvatarImage src={member.avatar || ''} alt={member.name} />
                     <AvatarFallback className="bg-gradient-to-br from-brand-500 to-purple-600 text-white text-xs">
                       {getInitials(member.name)}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
-                    <p className="font-medium text-foreground">{member.name}</p>
-                    <p className="text-sm text-muted-foreground">{member.department}</p>
+                  <div className="min-w-0">
+                    <p className="font-medium text-foreground truncate">{member.name}</p>
+                    <p className="text-sm text-muted-foreground truncate">{member.department}</p>
                   </div>
                 </div>
-                <div className="text-left md:text-right w-full md:w-auto pl-14 md:pl-0">
+                <div className="text-right flex-shrink-0">
                   <Badge variant="outline" className={getRoleColor(member.role)}>
                     {member.role.replace('-', ' ')}
                   </Badge>
